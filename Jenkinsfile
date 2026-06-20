@@ -5,25 +5,21 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                echo 'Downloading Code'
+                echo 'Downloading Source Code'
             }
         }
 
-        stage('Build') {
+        stage('Build Docker Image') {
             steps {
-                echo 'Building Application'
+                bat 'docker build -t flask-app .'
             }
         }
 
-        stage('Test') {
+        stage('Run Container') {
             steps {
-                echo 'Testing Application'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploying Application'
+                bat 'docker stop flask-container || exit 0'
+                bat 'docker rm flask-container || exit 0'
+                bat 'docker run -d -p 5000:5000 --name flask-container flask-app'
             }
         }
     }
