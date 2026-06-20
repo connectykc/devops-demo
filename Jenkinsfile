@@ -3,7 +3,7 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
+        stage('GitHub') {
             steps {
                 echo 'GitHub Connected'
             }
